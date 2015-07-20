@@ -1,0 +1,78 @@
+package com.kr.spt;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+
+
+
+
+
+
+
+import org.junit.Test;
+
+import com.kr.spt.mappers.HubMapper;
+import com.kr.spt.vo.CriteriaVO;
+import com.kr.spt.vo.HubVO;
+
+public class MapperTest extends SpringTest {
+
+	
+	@Inject
+	HubMapper hm;
+	
+	/*	
+  @Test
+	public void testhubMapperRead() throws Exception{
+		
+		HubVO hvo = new HubVO();
+		
+		hvo = hm.read("GG01");
+		
+		logger.info("--------------------------------------------------");
+		logger.info(hvo.toString());
+		logger.info("--------------------------------------------------");
+		
+		
+	}
+	*/
+	
+	/*
+	@Test
+	public void testhubMapperInsert() throws Exception{
+		HubVO hvo = new HubVO();
+		
+		hvo.setHub_id("YUI00");
+		hvo.setHub_pw("0000");
+		hvo.setHub_user("TAKE@daum.net");
+		
+		hm.create(hvo);
+		
+	}
+	*/
+	
+	
+	@Test
+	public void testhubMapperList() throws Exception{
+		//HubVO hvo = new HubVO();
+		CriteriaVO cvo = new CriteriaVO();
+		List<HubVO> list = new ArrayList<HubVO>();
+		String[] type = {"hubid"};
+		
+		cvo.setType(type);
+		cvo.setKeyword("G");
+		cvo.setPage(1);
+		list = hm.list(cvo) ;
+		
+		logger.info("---------------------------------------");
+		logger.info(list);
+		logger.info("---------------------------------------"); 
+		
+	}
+	
+	
+	
+}

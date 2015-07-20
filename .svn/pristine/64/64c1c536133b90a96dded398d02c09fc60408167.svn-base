@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	
+	<http pattern="/favicon.ico" security="none"></http>
+	<http pattern="/**/*.js" security="none"></http>
+	<http pattern="/**/*.css" security="none"></http>
+	
+	<http pattern="/login**" security="none"></http> 
+	
+	 
+	 <http auto-config="true" 
+	 		once-per-request="true"
+	 			use-expressions="true"
+	 			access-denied-page="/denied">
+		
+     
+     <!-- 핸들러로 처리 -->
+		<form-login login-page="/login" 
+			authentication-success-handler-ref="loginSuccessHandler"
+   			authentication-failure-handler-ref="loginFailureHandler"/>	
+    	
+    	
+    	<logout logout-success-url="/loginOut"	invalidate-session="true" />
+    	<session-management invalid-session-url="/login" />
+    	<!-- http://www.cnblogs.com/visoncheng/p/3335768.html -->
+    	<custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR"/> 	    	
+    </http>
+
+	<beans:bean id="loginSuccessHandler" class="com.kr.spt.security.LoginSuccessHandler"></beans:bean>
+	<beans:bean id="loginFailureHandler" class="com.kr.spt.security.LoginFailureHandler"></beans:bean>
+	
+	<beans:bean id="myFilter" class="com.kr.spt.security.MyFilterSecurityInterceptor">
+  		<beans:property name="accessDecisionManager" ref="myAccessDecisionManager"/>
+  		<beans:property name="securityMetadataSource" ref="mySecurityMetadataSource"/>
+  		<beans:property name="authenticationManager" ref="authenticationManager"/>
+ 	</beans:bean>
+ 	
+ 	 	
+ 	<beans:bean id="myAccessDecisionManager" class="com.kr.spt.security.MyAccessDecisionManager"></beans:bean> 	
+	
+	<beans:bean id="mySecurityMetadataSource" class="com.kr.spt.security.MyInvocationSecurityMetadataSourceService">
+       <beans:constructor-arg ref="login"></beans:constructor-arg>
+ 	</beans:bean> 
+	<beans:bean id="login" class="com.kr.spt.service.LoginService_ex"></beans:bean>
+	
+
+	<!-- 
+	<authentication-manager >
+		<authentication-provider>
+			<user-service>
+				<user name="user00" password="00" authorities="role_comm"/>
+				<user name="admin" password="admin" authorities="role_comm"/>
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+	<beans:bean id="userDetailsManager" class="com.kr.spt.security.MyUserDetailsService"/>  
+		  -->
+		  
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="userDetailsManager">
+	
+		</authentication-provider>
+	</authentication-manager>
+	<beans:bean id="userDetailsManager" class="com.kr.spt.security.MyUserDetailsService"/>  
+		  
+</beans:beans>

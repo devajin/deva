@@ -1,0 +1,28 @@
+package com.kr.spt;
+
+import javax.inject.Inject;
+
+import org.junit.Test;
+
+import com.kr.spt.service.HubService;
+import com.kr.spt.vo.HubVO;
+
+public class ServiceTest extends SpringTest {
+
+	@Inject
+	HubService hs;
+	
+	
+	@Test
+	public void testServcie() throws Exception{
+		
+		HubVO hvo = new HubVO();
+		
+		hvo = hs.view("GG02");
+		
+		logger.info("-----------------------------------------------------");
+		logger.info(hvo.toString());
+		logger.info("-----------------------------------------------------");
+	}
+	
+}
