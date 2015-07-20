@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.kr.spt.mappers.BoardMapper">
+  
+  	<insert id="create">
+  		insert into TB_freebbs (bbs_nick,bbs_email,bbs_type,bbs_title, bbs_content) 
+  						values(#{bbs_nick} , #{bbs_email} ,  #{bbs_type} , #{bbs_title},  #{bbs_content});
+  	</insert>
+  	
+  	
+  	<select id="read" resultType="com.kr.spt.vo.BoardVO">
+	  	select bbs_seq, bbs_nick, bbs_email, bbs_type, bbs_title, bbs_content, bbs_cnt,
+	  					 bbs_x, bbs_y, bbs_initdate , bbs_update from TB_freebbs where bbs_seq = #{bbs_seq}
+  	</select>
+	
+	
+	<update id="update">
+  		update TB_freebbs set bbs_type = #{bbs_type}, bbs_update = now(), 
+  							bbs_title=#{bbs_title}, bbs_content=#{bbs_content} where bbs_seq=#{bbs_seq};
+  	</update>
+  	
+  	
+  	<delete id="delete">
+  		delete from TB_freebbs where bbs_seq = #{bbs_seq}
+  	</delete>
+	
+	
+	<select id="list"  parameterType="com.kr.spt.vo.CriteriaVO" resultType="com.kr.spt.vo.BoardVO">
+  		select a.* from
+			(select t.* , <![CDATA[@rownum]]> as totcnt  
+				from 
+					(select <![CDATA[@rownum := @rownum]]> + 1 as rnum,
+					 	bbs_seq, bbs_nick, bbs_email, bbs_type, bbs_title, bbs_content, bbs_cnt, bbs_x, bbx_y,bbs_initdate from TB_freebbs, 
+								(select <![CDATA[@rownum :=0]]>) as r 
+									<where>
+										<if test="type !=null">
+											<foreach collection="type" index="index" item="item" separator="OR">
+												<if test="item==&quot;userid&quot;">bbs_email</if>
+												<if test="item==&quot;title&quot;">bbs_title</if>
+												<if test="item==&quot;content&quot;">bbs_content</if>
+												<if test="item==&quot;type&quot;">bbs_type</if>
+												like CONCAT('%',#{keyword},'%')
+											</foreach>
+										</if>
+									</where>
+								order by bbs_initdate DESC) t
+							 where t.rnum <![CDATA[<=]]> (CEIL(#{page}/10))*100+1) a
+						 where a.rnum between ((#{page}-1)*10)+1 and (#{page}*10)
+  	</select>
+  
+  
+  
+  </mapper>

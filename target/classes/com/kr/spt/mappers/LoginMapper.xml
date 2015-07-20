@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.kr.spt.mappers.LoginMapper">
+  
+  		<select id="getAuthorityName" resultType="String">
+  			select a.authority_name
+				from SYS_AUTHORITIES a, SYS_ROLES_AUTHORITIES b, SYS_USERS_ROLES c, SYS_USERS d
+				where   a.authority_id = b.authority_id and b.role_id = c.role_id
+					and c.user_id = d.user_id and  d.user_account = #{username}
+  		</select>
+  		
+  		<select id="getUserPWD" resultType="String" >
+  			select user_password from SYS_USERS 
+  				where user_id = #{username} 
+  		</select>
+  		
+  	 	<select id="selectAllAuthorityName" resultType="String">
+  			SELECT  AUTHORITY_NAME FROM SYS_AUTHORITIES
+  		</select>
+  		
+  		<select id="getResource" resultType="String">
+  		select b.resource_string
+				 from SYS_AUTHORITIES_RESOURCES a, SYS_RESOURCES b, SYS_AUTHORITIES c
+				 where a.resource_id = b.resource_id
+				     and a.authority_id=c.authority_id and c.Authority_name= #{authorityName}
+  		</select>
+  		
+  		<select id="selectAllResource" resultType="com.kr.spt.vo.SecurityVO">
+  		 SELECT  r.Resource_ID,r.resource_name,ar.authority_id,r.resource_string
+				FROM SYS_RESOURCES r ,SYS_AUTHORITIES_RESOURCES ar
+				WHERE r.resource_id=ar.resource_id   
+  		</select>
+  		
+  
+  </mapper>
