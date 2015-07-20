@@ -20,9 +20,4 @@
   	<delete id="delete">
   		delete from TB_hub where hub_id = #{hub_id}
   	</delete>
-  	
-  	<select id="list"  parameterType="com.kr.spt.vo.CriteriaVO" resultType="com.kr.spt.vo.SensorVO">
-  		select TB
-  	</select>
-  	
   </mapper>
