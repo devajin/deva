@@ -136,7 +136,7 @@ ${v1 }
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li id=""><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
@@ -201,6 +201,7 @@ ${v1 }
             </div>
         
 	<!-- /.row -->
+                        	<form action="">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
@@ -210,26 +211,25 @@ ${v1 }
                         <!-- /.panel-heading -->
                         <div class="panel-body" style="padding-bottom: 0">
                         
-                        	<form action="">
                         	
                         	
                         		<div class="form-group">
 					    			<label for="hubidInput">HUB ID</label>
-					    			<input type="text" class="form-control" id="hubidInput"  placeholder="Hub id" value="">
+					    			<input type="text" class="form-control" id="hubidInput" name="hub_id"  placeholder="Hub id" value="">
 					  			</div>
 								<div class="form-group">
 								    <label for="useridInput">User ID</label>
-								    <input type="text" class="form-control" id="useridInput"  placeholder="User id" value="">
+								    <input type="text" class="form-control" id="useridInput" name="hub_user" placeholder="User id" value="">
 								</div>
 								
 								<div class="form-group">
 								    <label for="useridInput">Hub Nick name</label>
-								    <input type="text" class="form-control" id="useridInput"  placeholder="Hub Nick name" value="">
+								    <input type="text" class="form-control" id="useridInput" name="hub_nick"  placeholder="Hub Nick name" value="">
 								</div>
 								
 								<div class="form-group">
 								    <label for="hubpwInput">HUB Password</label>
-							   		<input type="text" class="form-control" id="hubpwInput"   placeholder="Hub password" value="">
+							   		<input type="text" class="form-control" id="hubpwInput"  name="hub_pw"  placeholder="Hub password" value="">
 								</div>
 		                        <div class="form-group">
 								    <label for="hubpwInput">HUB Password reEnter</label>
@@ -237,9 +237,9 @@ ${v1 }
 								</div>	
                         		
                         
-                            </form>
                            
                         </div>
+                       
                         <!-- /.panel-body -->
                         <!-- row -->
 			<div class="row">
@@ -252,6 +252,7 @@ ${v1 }
 					</div>
 				</div>
 			</div>
+                            </form>
 						
                     </div>
                     
