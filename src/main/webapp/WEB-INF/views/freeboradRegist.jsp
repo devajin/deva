@@ -195,7 +195,7 @@ ${v1 }
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">HUB REGIST</h1>
+                    <h1 class="page-header">FREE BORAD REGIST</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -206,7 +206,7 @@ ${v1 }
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            HUB 추가
+                            자유 게시판 글쓰기
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body" style="padding-bottom: 0">

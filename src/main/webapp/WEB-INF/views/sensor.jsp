@@ -13,7 +13,7 @@ String contextRoot = request.getLocalAddr();
 String ServerURL = "http://192.168.100.188";
 String ResourcesURL = "192.168.100.188/resources";
 Map<String, Object> maplist = (Map<String, Object>)request.getAttribute("data");
-String docpath = "/admin";  
+String docpath = request.getContextPath();   
 
 %>
 
@@ -205,7 +205,7 @@ ${v1 }
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            SPT DataTables HUB information
+                            SPT DataTables Sensor information
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body" style="padding-bottom: 0">
@@ -299,6 +299,74 @@ ${v1 }
 	</div>
  <!-- /#wrapper -->
 
+<!-- Modal -->
+<div class="modal fade" id="hubinfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="hubinfoModalLabel"> </h4>
+      </div>
+      <div class="modal-body" id="hubinfoModalBody">
+		  
+		  
+		  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal -->
+  
+
+
+<!-- alert  Modal -->
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="alertModalLabel"> 알  림 </h4>
+      </div>
+      <div class="modal-body" id="alertModalBody">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- hub delete  -->
+<div class="modal fade" id="hubdelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="hubdelModalLabel">Hub 삭제</h4>
+      </div>
+      <div class="modal-body" id="hubdelModalBody">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">취  소</button>
+        <button type="button" class="btn btn-danger" id="hubdelBtn" >확  인</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
@@ -322,10 +390,10 @@ ${v1 }
     
     $(document).ready(function(){
     	hubListCall();
-    	
-    
     });
     
+    
+    /* 검색 */
     $(".dropdown-menu li a").click(function(){
     	  var selText = $(this).text();
     	  $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
@@ -349,15 +417,13 @@ ${v1 }
     
     
     
-    
+    // 리스트 
     function hubListCall(type, keyword, page){
 		
     	for (var i=0, len = arguments.length ; i < len ; i ++){
-	    //	console.log(len);
-    		
+	    	//console.log(len);
     		//console.log(arguments[i]);
     		//console.log(typeof(arguments[i])=="function");
-    		
     	}
     	
     	if(!page){
@@ -375,33 +441,46 @@ ${v1 }
     		var keyword ="", type="";
     	} */
     	
-    	
-    	
+    	var hubdata = {page : page, keyword : keyword, type : type };
+    	//console.log(hubdata);
     	$.ajax({
 			type: "POST",dataType: "json",
-			url: "http://<%= contextRoot%><%=docpath %>/Hub/List",
-			data: {page : page, keyword : keyword, type : type },
+			url: "http://<%= contextRoot%><%=docpath %>/Hub/getHubList",
+			data: hubdata,
 			success: function(data) {
+				
 				var contents="";
 				$('#tbodydata').empty();
-				$.each(data, function(i, val){
-					var isOdd = (0==i/2) ? 'odd' : 'even' ;
-					contents +=  '<tr class="'+isOdd+' gradeX" id="'+val.hub_id+'">'+
-                    '<td>'+val.hub_id+'</td>'+
-                    '<td>'+val.hub_user+'</td>'+
-                    '<td class="center">'+val.hub_pw+'</td>'+
-                    '<td class="center">'+val.hub_udate+'</td>'+
-                    '<td class="center">'+val.hub_intidate+'</td>'+
-                '</tr>';
+				 /* data.isComplet = 1; */ 
+				if(data.isComplet == 0){
+				 console.log("----------- success" );
+						$.each(data.result, function(i, val){
+							var isOdd = (0==i/2) ? 'odd' : 'even' ;
+							contents +=  '<tr class="'+isOdd+' gradeX" id="'+val.hub_id+'">'+
+		                    '<td>'+val.hub_id+'</td>'+
+		                    '<td>'+val.hub_user+'</td>'+
+		                    '<td class="center">'+val.hub_pw+'</td>'+
+		                    '<td class="center">'+val.hub_udate+'</td>'+
+		                    '<td class="center">'+val.hub_intidate+'</td>'+
+		                    '<td class="center"><button type="button" class="btn btn-danger" id="hubdel'+val.hub_id+'">삭제</button> </td>'+
+		                '</tr>';
+							
+						});
+						
+						$('#tbodydata').append(contents);
+						
+						
+						var totalCount = data.result[0].totcnt/10;
+						newDrowPage(parseInt(totalCount)+1 , page);
+				}else if(data.isComplet == 1){
+					console.log("----------- filed " );
+					var messageText = "알 수 없는 오류로 데이터를 읽어 오지 못했습니다."
 					
-				});
-				
-				$('#tbodydata').append(contents);
-				
-
-				//console.log(data[0].totcnt);
-				var totalCount = data[0].totcnt/10;
-				newDrowPage(parseInt(totalCount)+1 , page);
+						$('#altModalBody').append(messageText);
+					$('#alertModal').modal('show', function(){
+						console.log(messageText);	
+					});
+				}
 				
 
 			},
@@ -413,14 +492,129 @@ ${v1 }
     	
     };
     
+    // 삭제 버튼
+    $('#dataTables-hub').on('click', '#tbodydata > tr > td > button', function(e){
+    	
+    	$('#hubdelModalBody').empty();
+    	console.log($(this).attr('id').substring(6));
+    	var hubid = $(this).attr('id').substring(6);
+    	var textcontent = '<h3><span class="label label-warning">'+hubid+'</span></h3>'+
+    						'해당 hub를 삭제 하시겠습니까?</br>'+
+    						'hub에 등록된 <b style="color:red;">센서(sensor)도</b> 함께 삭제 됩니다.</br>';
+    	
     
-    $('#dataTables-hub').on('click', '#tbodydata > tr', function(e){
-    	console.log($(this).attr('id'));
-    	//console.log(e);
-    	//newDrowPage(41,1)
-    	// 클릭시 모달로 수정 가능하게 설정 
+    	$('#hubdelModalBody').append(textcontent);
+    	$('#hubdelModal').modal('show');
+    	
+    	e.stopPropagation(); // 이벤트 버블링 
+        e.preventDefault();
     });
     
+    
+    $('#hubdelBtn').on('click', function(){
+    	
+    	var hubid ='TEST';
+    	console.log(hubid);
+    	hubdelete(hubid);
+    });
+    
+    // 삭제 function
+    function hubdelete(hubid){
+		    
+    		$.ajax({
+					type: "POST",dataType: "json",
+					url: "http://<%= contextRoot%><%=docpath %>/Hub/removeHub",
+					data: hubid,
+					success: function(data) {
+						
+						var contents="";
+						$('#tbodydata').empty();
+						 /* data.isComplet = 1; */ 
+						if(data.isComplet == 0){
+							
+						}
+				
+					},error: function(request,status,error){
+						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); }
+				});
+    	
+    }
+    
+    
+    
+    
+    //테이블 row 클릭시 이벤트 발생
+    $('#dataTables-hub').on('click', '#tbodydata > tr', function(e){
+    	//console.log($(this).attr('id'));
+    	var hubid = $(this).attr('id')
+    	
+    	e.stopPropagation(); // 이벤트 버블링 
+        e.preventDefault();
+    	    	
+    	// 클릭시 모달로 수정 가능하게 설정
+    	$.ajax({
+			type: "POST",dataType: "json",
+			url: "http://<%= contextRoot%><%=docpath %>/Hub/viewHub",
+			data: {hub_id : hubid },
+			success: function(data) {
+				var contents="";
+				$('#hubinfoModalLabel').empty();
+				$('#hubinfoModalBody').empty();
+				//console.log(" result data ::>> ", data.isComplet);
+				//console.log(" result data ::>> ", data.result);
+				
+				if(data.isComplet==0){
+				
+				$('#hubinfoModalLabel').append('HUB Information') ;
+				
+				 contents ='<div class="form-group">'+
+					    		'<label for="hubidInput">HUB ID</label>'+
+					    		'<input type="text" class="form-control" id="hubidInput" disabled value="'+data.result.hub_id+'">'+
+					  		'</div>'+
+							'<div class="form-group">'+
+							    '<label for="useridInput">User ID</label>'+
+							    '<input type="text" class="form-control" id="useridInput" value="'+data.result.hub_user+'">'+
+							'</div>'+
+								'<div class="form-group">'+
+							    '<label for="hubpwInput">HUB Password</label>'+
+						    '<input type="text" class="form-control" id="hubpwInput" value="'+data.result.hub_pw+'">'+
+							'</div>'+
+							'<div class="form-group">'+
+								    '<label for="hubupdateInput">수정일</label>'+
+								    '<input type="text" class="form-control" id="hubupdateInput" disabled value="'+data.result.hub_udate+'" >'+
+							'</div>'+
+							'<div class="form-group">'+
+								    '<label for="useridInput">생성일</label>'+
+								    '<input type="text" class="form-control" id="useridInput" disabled value="'+data.result.hub_intidate+'" >'+
+							'</div>';
+				
+				 
+				 
+				 
+				$('#hubinfoModalBody').append(contents); 
+				
+				
+				$('#hubinfoModal').modal('show')
+				}else{
+					
+					//isComplet : 1
+					// 데이터 이상 모달창으로 이상 여부 알려줌
+					
+				} 
+				
+				
+			},
+			
+			error: function(request,status,error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); }
+		});
+			
+    	
+    });
+    
+
+    
+    // 페이징 라이브러리 부분-------------------------------------------
     
     $('#pageList').on('click', 'ul > li', function(e){
     	//console.log($(this).attr('data-lp'));
@@ -428,7 +622,9 @@ ${v1 }
     	var type=$('.btn-select').text(), keyword=$('#inputSearchWord').val();
     	type="",keyword=""
     	hubListCall(type, keyword, page);
+     
     });
+    
     
     
     
@@ -489,7 +685,6 @@ ${v1 }
     		 liList = '<li class="paginate_button previous" tabindex="0" id="dataTables_previous_'+ liID+'">'+
 								'<a href="#">Previous</a>'+
 				  		'</li>';
-    		 
 
     	 }else{
     		 liList = '<li class="paginate_button previous disabled"  tabindex="0" id="dataTables-previous">'+
@@ -499,15 +694,12 @@ ${v1 }
     	    	
     	 
      	for (var iCount = pervStep; iCount <= nextStep; iCount++) { //
-    		  
     	    if (iCount == Page) {
     	      
     	        console.log("<b>" + iCount + "</b>");
-    	     
     	        liList += '<li class="paginate_button active"  tabindex="0">'+
 								'<a href="#">'+iCount+'</a>'+
 							'</li>';
-    	        
     	        
     	    } else {
     	        console.log("<i> " + iCount + "</i> ");
@@ -543,6 +735,8 @@ ${v1 }
     	 $('#pageList').append(liList);    	 
     	
     }
+    
+ // 페이징 라이브러리 부분-------------------------------------------
     
     </script>
     

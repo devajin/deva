@@ -10,10 +10,11 @@
 String ServerIP = request.getSession().getServletContext().getContextPath();
 /* String LocalAddr = request.getServerName(); */
 String contextRoot = request.getLocalAddr();
-String ServerURL = "http://192.168.100.188";
+String ServerURL = "52.69.148.233";
 String ResourcesURL = "192.168.100.188/resources";
 Map<String, Object> maplist = (Map<String, Object>)request.getAttribute("data");
-String docpath = "/admin";  
+String docpath = request.getContextPath();  
+
 
 %>
 
@@ -616,7 +617,7 @@ ${v1 }
 		});
 			
     	
-    });"C:/Users/deva/Downloads/ckeditor/samples/index.html"
+    });
     
 
     

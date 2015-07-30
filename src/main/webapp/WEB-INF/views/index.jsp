@@ -7,20 +7,21 @@
 <%
 String ServerAddr = request.getSession().getServletContext().getContextPath();
 String LocalAddr = request.getServerName(); 
-String contextPath = request.getContextPath();
+/* String contextPath = request.getContextPath(); */
 String contextRoot = request.getLocalAddr();
 String ServerURL = "http://192.168.100.188";
 String ResourcesURL = "192.168.100.188/resources";
 
-String docpath = "/admin";  
+String docpath = request.getContextPath();  
 
 
 %>
-
+<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <html lang="ko">
 
+${contextPath }
 <head>
 
     <meta charset="utf-8">
@@ -269,13 +270,13 @@ String docpath = "/admin";
 	<!-- <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
 	
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="../admin/resources/js/metisMenu.js"></script>
+    <script src="..<%=docpath %>/resources/js/metisMenu.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="../admin/resources/js/raphael-min.js"></script>
+    <script src="..<%=docpath %>/resources/js/raphael-min.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="../admin/resources/js/sb-admin-2.js"></script>
+    <script src="..<%=docpath %>/resources/js/sb-admin-2.js"></script>
 
 </body>
 

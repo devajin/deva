@@ -43,21 +43,21 @@
 		<constructor-arg><value>Hello World.... TEst youngjin 2015/04/30</value></constructor-arg>
 		</bean>
 		
-		<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 			<property name="jndiName"><value>java:comp/env/jdbc/SpringDS</value></property>
-		</bean> -->
+		</bean>
 		
-		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
   			destroy-method="close">
   			<property name="driverClassName" value="net.sf.log4jdbc.DriverSpy"/>
 			<property name="url" value="jdbc:log4jdbc:mysql://114.108.167.105:3306/SPT" />
 			<property name="username" value="root"/>
 			<property name="password" value="sptadmin"/>
-			<!-- <property name="initialSize" value="${jdbc.min.size}" />
-			<property name="maxActive" value="${jdbc.max.size}" /> -->
+			<property name="initialSize" value="${jdbc.min.size}" />
+			<property name="maxActive" value="${jdbc.max.size}" />
 			<property name="maxIdle" value="5" />
 			<property name="minIdle" value="2" />
-		</bean>
+		</bean> -->
 		
 		<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		  <property name="dataSource" ref="dataSource" />

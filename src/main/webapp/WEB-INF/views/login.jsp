@@ -9,15 +9,30 @@
 <%
 
 String LocalAddr = request.getServerName();
+String remoteAddr = request.getRemoteAddr();
+String remoteHost = request.getRemoteHost();
 String contextRoot = request.getContextPath();
+String req = "${req.}";
+/* String contextUri = Con */
+String docpath = request.getContextPath();
+
+
+
 
 %>
-request.getContext ::: > <%= contextRoot %>
+request.getContext ::: > <%= contextRoot %></br>
 server ip ::: >   <%= LocalAddr %> 
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
+</br>
+<div>
+<i></i>pageContext path <b>${pageContext.request.contextPath}</b></i></br>
+<i></i>remote host :  <b><%=remoteHost %>></b></i></br>
+<i></i>remote addr :  <b><%=remoteAddr %>></b></i></br>
 
+</div>
+</br>
 <head>
 
        <meta charset="utf-8">
@@ -31,19 +46,19 @@ server ip ::: >   <%= LocalAddr %>
 	
 
     <!-- Bootstrap Core CSS -->
-    <link href="../admin/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="..<%=docpath %>/resources/css/bootstrap.min.css" rel="stylesheet">
 	
-	<link rel="shortcut icon" href="../resources/imge/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="../admin/resources/imge/favicon.ico"  type="image/x-icon">
+	<link rel="shortcut icon" href="..<%=docpath %>/resources/imge/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="..<%=docpath %>/resources/imge/favicon.ico"  type="image/x-icon">
     
     <!-- MetisMenu CSS -->
-    <link href="../admin/resources/css/metisMenu.min.css" rel="stylesheet">
+    <link href="..<%=docpath %>/resources/css/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../admin/resources/css/sb-admin-2.css" rel="stylesheet">
+    <link href="..<%=docpath %>/resources/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="../admin/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="..<%=docpath %>/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -94,10 +109,10 @@ server ip ::: >   <%= LocalAddr %>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="../admin/resources/js/metisMenu.min.js"></script>
+    <script src="..<%=docpath %>/resources/js/metisMenu.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="../admin/resources/js/sb-admin-2.js"></script>
+    <script src="..<%=docpath %>/resources/js/sb-admin-2.js"></script>
 
 </body>
 
