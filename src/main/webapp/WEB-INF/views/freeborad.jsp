@@ -117,7 +117,7 @@ ${v1 }
                 <a class="navbar-brand" href="/admin/start"> 
                 	
                 	<div class="image-container col-lg-3 col-md-6" >
-		                	<img src="..<%=docpath %>/resources/imge/bi_5.png" class="img-responsive-10" >
+		                	<img src="..<%=docpath %>/resources/img/bi_5.png" class="img-responsive-10" >
 		            </div>
                 	
 		            <div class="image-container col-lg-3 col-md-6" >
@@ -275,7 +275,7 @@ ${v1 }
 				<div class="col-sm-6">
 					<div class="dataTables_paginate paging_simple_numbers pull-left" id="" style="margin-left: 1em;" >
 						<ul class="pagination" >
-							<a href="<%=docpath %>/Hub/addHub">
+							<a href="<%=docpath %>/bbs/write">
 								<button type="button"  class="btn btn-success" id="registHubBtn"><i class="fa fa-check fa-fw" ></i> 글 쓰기</button>
 							</a>
 						</ul>

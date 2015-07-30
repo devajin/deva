@@ -34,7 +34,9 @@ String docpath = request.getContextPath();
 	
     <!-- Bootstrap Core CSS -->
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
-
+	
+	<link href="../resources/css/fileinput.css"rel="stylesheet"/>
+	
     <!-- MetisMenu CSS -->
     <link href="../resources/css/metisMenu.css" rel="stylesheet">
 
@@ -116,7 +118,7 @@ ${v1 }
                 <a class="navbar-brand" href="/admin/start"> 
                 	
                 	<div class="image-container col-lg-3 col-md-6" >
-		                	<img src="../resources/imge/bi_5.png" class="img-responsive-10" >
+		                	<img src="../resources/img/bi_5.png" class="img-responsive-10" >
 		            </div>
                 	
 		            <div class="image-container col-lg-3 col-md-6" >
@@ -211,9 +213,12 @@ ${v1 }
                         <!-- /.panel-heading -->
                         <div class="panel-body" style="padding-bottom: 0">
                         
-                        	
-                        	
-                        		<div class="form-group">
+                        		
+                        		<input id="input-43" type="file" multiple class="file-loading">
+                        		<div id="errorBlock43" class="help-block"></div>
+                        		
+                        		
+                        		<!-- <div class="form-group">
 					    			<label for="hubidInput">HUB ID</label>
 					    			<input type="text" class="form-control" id="hubidInput" name="hub_id"  placeholder="Hub id" value="">
 					  			</div>
@@ -234,7 +239,7 @@ ${v1 }
 		                        <div class="form-group">
 								    <label for="hubpwInput">HUB Password reEnter</label>
 							   		<input type="text" class="form-control" id="hubpwInput"  placeholder="Hub password reEnter" value="">
-								</div>	
+								</div> -->	
                         		
                         
                            
@@ -274,6 +279,8 @@ ${v1 }
     <!-- Bootstrap Core JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
+	<script src="../resources/js/fileinput.js"></script>
+
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../resources/js/metisMenu.js"></script>
 
@@ -287,8 +294,15 @@ ${v1 }
     
     
     <script>
-    
-    
+    $("#input-43").fileinput({
+        showPreview: true,
+        uploadUrl: "/file/upload",
+        allowedFileTypes: ["image", "video", "mp3"],
+        allowedFileExtensions: ["zip", "rar", "gz", "tgz", "jpg", "gif", "png", "txt","mp3"],
+        elErrorContainer: "#errorBlock43",
+        uploadAsync: false
+        // you can configure `msgErrorClass` and `msgInvalidFileExtension` as well
+    });
     
 	</script>
     

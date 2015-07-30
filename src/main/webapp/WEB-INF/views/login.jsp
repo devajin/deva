@@ -48,7 +48,7 @@ server ip ::: >   <%= LocalAddr %>
     <!-- Bootstrap Core CSS -->
     <link href="..<%=docpath %>/resources/css/bootstrap.min.css" rel="stylesheet">
 	
-	<link rel="shortcut icon" href="..<%=docpath %>/resources/imge/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="..<%=docpath %>/resources/img/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="..<%=docpath %>/resources/imge/favicon.ico"  type="image/x-icon">
     
     <!-- MetisMenu CSS -->

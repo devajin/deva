@@ -95,7 +95,7 @@ ${contextPath }
                 <a class="navbar-brand" href="/admin/start"> 
                 	
                 	<div class="image-container col-lg-3 col-md-6" >
-		                	<img src="..<%=docpath %>/resources/imge/bi_5.png" class="img-responsive-10" >
+		                	<img src="..<%=docpath %>/resources/img/bi_5.png" class="img-responsive-10" >
 		            </div>
                 	
 		            <div class="image-container col-lg-3 col-md-6" >
